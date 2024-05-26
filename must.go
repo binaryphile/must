@@ -33,3 +33,14 @@ func MustGetenv(key string) string {
 
 	return result
 }
+
+func Must1[T, R any](fn func(T) (R, error)) func(T) R {
+	return func(t T) R {
+		r, err := fn(t)
+		if err != nil {
+			panic(err)
+		}
+
+		return r
+	}
+}
