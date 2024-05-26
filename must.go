@@ -44,3 +44,14 @@ func Must1[T, R any](fn func(T) (R, error)) func(T) R {
 		return r
 	}
 }
+
+func Must2[T, T2, R any](fn func(T, T2) (R, error)) func(T, T2) R {
+	return func(t T, t2 T2) R {
+		r, err := fn(t, t2)
+		if err != nil {
+			panic(err)
+		}
+
+		return r
+	}
+}
